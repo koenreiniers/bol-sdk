@@ -1,4 +1,17 @@
 {
+    "name": "koenreiniers/bol-sdk",
+    "type": "library",
+    "description": "SDK For the Bol Plaza API",
+    "keywords": ["bol", "api", "plaza"],
+    "homepage": "http://www.koenreiniers.nl/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Koen Reiniers",
+            "email": "contact@koenreiniers.nl",
+            "homepage": "http://www.koenreiniers.nl"
+        }
+    ],
     "autoload": {
         "psr-4": {"Kr\\Bol\\": "src/"}
     },
