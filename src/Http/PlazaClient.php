@@ -1,8 +1,8 @@
 <?php
 namespace Kr\Bol\Http;
 
-use Guzzle\Http\Client as HttpClient;
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\Psr7\Response;
 
 class PlazaClient
 {
@@ -68,10 +68,16 @@ class PlazaClient
         $headers    = $this->headerGenerator->generateHeaders($this->publicKey, $this->privateKey, $target, $method);
         $url        = self::ENTRY_POINT . $target;
 
-        $request = $this->httpClient->createRequest($method, $url, $headers, $content);
+
+        $options = [
+            "headers" => $headers,
+            "body" => $content,
+        ];
+
+
 
         try {
-            $response = $request->send();
+            $response = $this->httpClient->request($method, $url, $options);
         } catch(\Exception $e) {
             $this->exceptionHandler->handle($e);
         }

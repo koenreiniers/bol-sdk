@@ -16,7 +16,7 @@
         "psr-4": {"Kr\\Bol\\": "src/"}
     },
     "require": {
-        "guzzle/guzzle": "^3.9",
-        "beberlei/assert": "^2.4"
+        "beberlei/assert": "^2.4",
+        "guzzlehttp/guzzle": "^6.1"
     }
 }
