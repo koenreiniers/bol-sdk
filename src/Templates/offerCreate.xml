@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfferCreate xmlns="http://plazaapi.bol.com/offers/xsd/api-1.0.xsd">
+    <EAN><?php echo $offer->getEan(); ?></EAN>
+    <Condition><?php echo $offer->getCondition(); ?></Condition>
+    <Price><?php echo $offer->getPrice(); ?></Price>
+    <DeliveryCode><?php echo $offer->getDeliveryCode(); ?></DeliveryCode>
+    <QuantityInStock><?php echo $offer->getQuantityInStock(); ?></QuantityInStock>
+    <Publish><?php echo $offer->getPublish() ? "true" : "false"; ?></Publish>
+    <ReferenceCode><?php echo $offer->getReferenceCode(); ?></ReferenceCode>
+    <Description><?php echo $offer->getDescription(); ?></Description>
+</OfferCreate>

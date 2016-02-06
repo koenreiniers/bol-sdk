@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StockUpdate xmlns="http://plazaapi.bol.com/offers/xsd/api-1.0.xsd">
+    <QuantityInStock><?php echo $offer->getQuantityInStock(); ?></QuantityInStock>
+</StockUpdate>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfferUpdate xmlns="http://plazaapi.bol.com/offers/xsd/api-1.0.xsd">
+    <Price><?php echo $offer->getPrice(); ?></Price>
+    <DeliveryCode><?php echo $offer->getDeliveryCode(); ?></DeliveryCode>
+    <Publish><?php echo $offer->getPublish() ? "true" : "false"; ?></Publish>
+    <ReferenceCode><?php echo $offer->getReferenceCode(); ?></ReferenceCode>
+    <Description><?php echo $offer->getDescription(); ?></Description>
+</OfferUpdate>

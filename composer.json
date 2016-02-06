@@ -1,0 +1,9 @@
+{
+    "autoload": {
+        "psr-4": {"Kr\\Bol\\": "src/"}
+    },
+    "require": {
+        "guzzle/guzzle": "^3.9",
+        "beberlei/assert": "^2.4"
+    }
+}
