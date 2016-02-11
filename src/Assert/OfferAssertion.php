@@ -24,7 +24,7 @@ class OfferAssertion
      */
     public static function price($price)
     {
-        Assert::digit($price);
+        Assert::numeric($price);
         Assert::greaterThan($price, 0);
         Assert::lessThan($price, 10000);
     }
@@ -96,6 +96,7 @@ class OfferAssertion
      */
     public static function quantityInStock($quantityInStock)
     {
+        Assert::integer($quantityInStock);
         Assert::min($quantityInStock, 0);
         Assert::max($quantityInStock, 500);
     }

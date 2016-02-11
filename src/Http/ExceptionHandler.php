@@ -5,6 +5,7 @@ use Kr\Bol\Exception\UnauthorizedException;
 use Kr\Bol\Exception\InvalidXmlException;
 use Kr\Bol\Exception\ApiLimitException;
 use Kr\Bol\Exception\BolException;
+use GuzzleHttp\Exception\RequestException;
 
 use Kr\Bol\Utils\XmlParser;
 
@@ -17,21 +18,39 @@ class ExceptionHandler
 
     /**
      * Captch known exceptions
-     * @param \Exception $e
+     * @param RequestException $e
+     * @throws BolException
+     * @throws \Exception
+     */
+    public function handle(RequestException $e)
+    {
+        $response   = $e->getResponse();
+        $statusCode = $response->getStatusCode();
+
+        $this->handleStatusCode($statusCode);
+
+        $body       = $response->getBody(true);
+        $message    = $this->xmlParser->parse($body);
+
+        if(isset($message['ErrorCode'])) {
+            throw new BolException($message['ErrorMessage'], $message['ErrorCode']);
+        }
+
+        throw new \Exception("Unknown error occurred. Status code: {$response->getStatusCode()}.");
+    }
+
+    /**
+     * Handle known HTTP response status codes
+     * @param integer $statusCode
      * @throws ApiLimitException
      * @throws InvalidXmlException
      * @throws UnauthorizedException
-     * @throws \Exception
      */
-    public function handle(\Exception $e)
+    public function handleStatusCode($statusCode)
     {
-        $response = $e->getResponse();
-
-        $statusCode = $response->getStatusCode();
-
         if($statusCode == 401)
         {
-            throw new UnauthorizedException("Authorization failed. Are your public and private key correct?");
+            throw new UnauthorizedException();
         }
         else if($statusCode == 400)
         {
@@ -41,15 +60,5 @@ class ExceptionHandler
         {
             throw new ApiLimitException();
         }
-
-        $body = $response->getBody(true);
-        $message = $this->xmlParser->parse($body);
-
-        if(isset($message['ErrorCode'])) {
-            throw new BolException($message['ErrorCode'] . ": " . $message['ErrorMessage']);
-        }
-
-
-        throw new \Exception("Unknown error occurred. Status code: {$response->getStatusCode()}.");
     }
 }
