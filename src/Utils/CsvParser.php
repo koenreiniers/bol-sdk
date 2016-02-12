@@ -14,8 +14,14 @@ class CsvParser
 
         $headers = str_getcsv(array_shift($rows));
 
-        // Remove last empty row
-        array_pop($rows);
+        // Remove last row if it's empty
+        $lastRow = end($rows);
+        if($lastRow === "") {
+            array_pop($rows);
+        }
+
+
+        $output = [];
 
         foreach($rows as $row)
         {

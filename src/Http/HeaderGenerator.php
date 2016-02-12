@@ -13,10 +13,12 @@ class HeaderGenerator
      * @param string $contentType
      * @return array
      */
-    public function generateHeaders($publicKey, $privateKey, $target, $method)
+    public function generateHeaders($publicKey, $privateKey, $target, $method, $date = null)
     {
-        $date           = gmdate("D, d M Y H:i:s T");
-        $contentType    = "application/xml; charset=UTF-8";
+        if($date == null) {
+            $date = gmdate("D, d M Y H:i:s T");
+        }
+        $contentType = "application/xml; charset=UTF-8";
 
         $headers = [
             "Content-type"          => $contentType,
