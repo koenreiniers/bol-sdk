@@ -1,8 +1,8 @@
 # bol-sdk
 SDK for the Bol API
 ## About
-Since there is not yet an SDK available for the new part of the Bol Plaza API (offer management), I decided to create one. That means this SDK does supports neither orders nor the Bol Open Api. However, they MIGHT be added in the future.
-You are however free to extend this SDK to your likings or event submit a pull request.
+Since there is not yet a SDK available for the new part of the Bol Plaza API (offer management), I decided to create one. That means this SDK does not support orders and the Open Api. However, they MIGHT be added in the future.
+You are free to extend this SDK to your likings or even submit a pull request.
 ## Installation
 ```
 composer require koenreiniers/bol-sdk
@@ -70,4 +70,4 @@ $headers = $headerGenerator->generateHeaders($publicKey, $privateKey, $target, $
 ```
 
 ## Tests
-There are no tests as of yet. Sorry.
+Coverage is about ~70% atm.
