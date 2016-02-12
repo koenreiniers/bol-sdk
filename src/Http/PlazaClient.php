@@ -6,17 +6,27 @@ use GuzzleHttp\Psr7\Response;
 
 class PlazaClient
 {
-    const ENTRY_POINT = "https://plazaapi.bol.com";
+    const ENTRY_POINT       = "https://plazaapi.bol.com";
+    const TEST_ENTRY_POINT  = "https://test-plazaapi.bol.com";
+
     private $publicKey;
     private $privateKey;
 
-    public function __construct($publicKey, $privateKey)
+    /**
+     * PlazaClient constructor.
+     * @param string $publicKey
+     * @param string $privateKey
+     * @param bool $isTestMode
+     */
+    public function __construct($publicKey, $privateKey, $isTestMode = false)
     {
-        $this->publicKey = $publicKey;
-        $this->privateKey = $privateKey;
+        $this->publicKey    = $publicKey;
+        $this->privateKey   = $privateKey;
+        $this->isTestMode   = $isTestMode;
+
         $this->exceptionHandler = new ExceptionHandler();
-        $this->httpClient = new HttpClient();
-        $this->headerGenerator = new HeaderGenerator();
+        $this->httpClient       = new HttpClient();
+        $this->headerGenerator  = new HeaderGenerator();
     }
 
     /**
@@ -66,7 +76,13 @@ class PlazaClient
     public function request($method, $target, $content = null)
     {
         $headers    = $this->headerGenerator->generateHeaders($this->publicKey, $this->privateKey, $target, $method);
-        $url        = self::ENTRY_POINT . $target;
+
+        if($this->isTestMode) {
+            $url = self::TEST_ENTRY_POINT . $target;
+        } else {
+            $url = self::ENTRY_POINT . $target;
+        }
+
 
 
         $options = [

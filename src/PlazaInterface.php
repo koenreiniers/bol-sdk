@@ -49,4 +49,10 @@ interface PlazaInterface
      * @return array
      */
     public function readExport($filename);
+
+    /**
+     * Retrieve array of currently open orders
+     * @return array
+     */
+    public function getOpenOrders();
 }

@@ -8,19 +8,36 @@ use Kr\Bol\Utils\XmlParser;
 use Kr\Bol\Utils\XmlWriter;
 use Kr\Bol\Exception\ExportNotReadyException;
 use Kr\Bol\Validator\OfferValidator;
+use Kr\Bol\Mapper\OrderMapper;
 
 class Plaza implements PlazaInterface
 {
-    const ENTRY_POINT = "https://plazaapi.bol.com";
-    public function __construct($publicKey, $privateKey)
+    public function __construct($publicKey, $privateKey, $isTestMode = false)
     {
         $this->publicKey        = $publicKey;
         $this->privateKey       = $privateKey;
-        $this->client           = new PlazaClient($publicKey, $privateKey);
+
+        $this->client           = new PlazaClient($publicKey, $privateKey, $isTestMode);
         $this->xmlWriter        = new XmlWriter();
         $this->validator        = new OfferValidator();
         $this->xmlParser        = new XmlParser();
         $this->csvParser        = new CsvParser();
+        $this->orderMapper      = new OrderMapper();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getOpenOrders()
+    {
+        $target     = "/services/rest/orders/v1/open/";
+        $response = $this->client->get($target);
+
+        $xmlString = $response->getBody()->getContents();
+
+        $orders = $this->orderMapper->map($xmlString);
+
+        return $orders;
     }
 
     /**
@@ -113,7 +130,7 @@ class Plaza implements PlazaInterface
         $xmlString = $response->getBody(true);
 
         $output = $this->xmlParser->parse($xmlString);
-        $exportFileUrl = $output['Url'];
+        $exportFileUrl = $output['OfferFile']['Url'];
         $filename = substr($exportFileUrl, strrpos($exportFileUrl, '/') + 1);
 
         return $filename;

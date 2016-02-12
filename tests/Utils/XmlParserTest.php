@@ -12,11 +12,14 @@ class XmlParserTest extends \PHPUnit_Framework_TestCase
         $output = $parser->parse($xmlString);
 
         $expected = [
-            "item" => [
-                "id"    => 1,
-                "foo"   => "bar",
-            ],
+            "wrapper" => [
+                "item" => [
+                    "id"    => 1,
+                    "foo"   => "bar",
+                ],
+            ]
         ];
+
 
         $this->assertEquals($expected, $output);
     }

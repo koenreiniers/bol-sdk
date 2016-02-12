@@ -32,6 +32,8 @@ class ExceptionHandler
         $body       = $response->getBody(true);
         $message    = $this->xmlParser->parse($body);
 
+        $message = $message['serviceError'];
+
         if(isset($message['ErrorCode'])) {
             throw new BolException($message['ErrorMessage'], $message['ErrorCode']);
         }
